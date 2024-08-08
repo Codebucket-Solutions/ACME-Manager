@@ -48,7 +48,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange(exchanges -> exchanges
-                        .pathMatchers(HttpMethod.GET, "/.well-known/acme-challenge/").permitAll() // For ACME client to verify domain ownership
+                        .pathMatchers(HttpMethod.GET, "/.well-known/acme-challenge/*").permitAll() // For ACME client to verify domain ownership
                         .pathMatchers("/**").access(new TokenAuthenticationManager())
                         .anyExchange()
                         .permitAll())
