@@ -17,14 +17,14 @@
 
 package in.codebuckets.acmemanager.server.controllers;
 
-import in.codebuckets.acmemanager.common.Responses;
+import in.codebuckets.acmemanager.common.JwtService;
+import in.codebuckets.acmemanager.common.json.Responses;
 import in.codebuckets.acmemanager.server.GlobalExceptionHandler;
 import in.codebuckets.acmemanager.server.dto.AccountOperation;
 import in.codebuckets.acmemanager.server.dto.LoginResponse;
 import in.codebuckets.acmemanager.server.jpa.Account;
 import in.codebuckets.acmemanager.server.jpa.AccountRepository;
 import in.codebuckets.acmemanager.server.services.AccountService;
-import in.codebuckets.acmemanager.server.services.JwtService;
 import org.shredzone.acme4j.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,7 +86,7 @@ public class AccountController {
                 return Responses.responseError(CONFLICT, "Account location mismatch");
             }
 
-            return Responses.ok(new LoginResponse(jwtService.generateJwt(account), account));
+            return Responses.ok(new LoginResponse(jwtService.generateJwt(account.id()), account));
         }).exceptionally(GlobalExceptionHandler.GENERIC_EXCEPTION_HANDLER);
     }
 }

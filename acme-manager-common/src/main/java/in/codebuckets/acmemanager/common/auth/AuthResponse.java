@@ -15,9 +15,9 @@
  *
  */
 
-package in.codebuckets.acmemanager.server.auth;
+package in.codebuckets.acmemanager.common.auth;
 
-import in.codebuckets.acmemanager.common.Jackson;
+import in.codebuckets.acmemanager.common.json.Jackson;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

@@ -15,7 +15,7 @@
  *
  */
 
-package in.codebuckets.acmemanager.common;
+package in.codebuckets.acmemanager.common.json;
 
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import static in.codebuckets.acmemanager.common.Jackson.toJson;
+import static in.codebuckets.acmemanager.common.json.Jackson.toJson;
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;

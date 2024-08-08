@@ -18,7 +18,7 @@
 package in.codebuckets.acmemanager.server;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
-import in.codebuckets.acmemanager.common.Responses;
+import in.codebuckets.acmemanager.common.json.Responses;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.function.Function;
 
-import static in.codebuckets.acmemanager.common.Jackson.toJson;
+import static in.codebuckets.acmemanager.common.json.Jackson.toJson;
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.MediaType.APPLICATION_JSON;

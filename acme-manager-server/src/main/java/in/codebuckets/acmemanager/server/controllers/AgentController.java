@@ -17,17 +17,14 @@
 
 package in.codebuckets.acmemanager.server.controllers;
 
-import in.codebuckets.acmemanager.common.Responses;
 import in.codebuckets.acmemanager.server.AvailableFilters;
 import in.codebuckets.acmemanager.server.Filters;
 import in.codebuckets.acmemanager.server.PagedResponse;
 import in.codebuckets.acmemanager.server.dto.AgentRegister;
 import in.codebuckets.acmemanager.server.jpa.Agent;
 import in.codebuckets.acmemanager.server.jpa.AgentRepository;
-import in.codebuckets.acmemanager.server.jpa.Certificate;
 import in.codebuckets.acmemanager.server.services.AgentService;
 import in.codebuckets.acmemanager.server.services.FilterService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +37,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-import static in.codebuckets.acmemanager.common.Responses.ok;
-import static in.codebuckets.acmemanager.common.Responses.responseError;
+import static in.codebuckets.acmemanager.common.json.Responses.ok;
+import static in.codebuckets.acmemanager.common.json.Responses.responseError;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;

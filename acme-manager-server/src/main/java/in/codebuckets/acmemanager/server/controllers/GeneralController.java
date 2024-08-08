@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static in.codebuckets.acmemanager.common.Responses.ok;
+import static in.codebuckets.acmemanager.common.json.Responses.ok;
 import static in.codebuckets.acmemanager.server.acme.AcmeProvider.LETS_ENCRYPT;
 import static in.codebuckets.acmemanager.server.acme.AcmeProvider.LETS_ENCRYPT_STAGING;
 import static java.util.List.of;

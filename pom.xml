@@ -30,6 +30,7 @@
         <module>acme-manager-server</module>
         <module>acme-manager-agent</module>
         <module>acme-manager-common</module>
+        <module>acme-manager-tests</module>
     </modules>
 
     <properties>
@@ -73,6 +74,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2 -->

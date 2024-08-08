@@ -15,30 +15,7 @@
  *
  */
 
-package in.codebuckets.acmemanager.agent;
+package in.codebuckets.acmemanager;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-@Service
-public class AuthService {
-
-    public static final String AUTH_HEADER = "X-Api-Key";
-
-    @Value("${app.apiKey}")
-    private String apiKey;
-
-    /**
-     * Authenticate the API key
-     *
-     * @param apiKey API key to authenticate
-     * @return true if the API key is valid, false otherwise
-     */
-    public boolean authenticate(String apiKey) {
-        return this.apiKey.equals(apiKey);
-    }
-
-    public String apiKey() {
-        return apiKey;
-    }
+public class ProvisionCertificateUsingDnsChallenge {
 }

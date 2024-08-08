@@ -33,8 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.CompletableFuture;
 
-import static in.codebuckets.acmemanager.common.Responses.badRequest;
-import static in.codebuckets.acmemanager.common.Responses.ok;
+import static in.codebuckets.acmemanager.common.json.Responses.badRequest;
+import static in.codebuckets.acmemanager.common.json.Responses.ok;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

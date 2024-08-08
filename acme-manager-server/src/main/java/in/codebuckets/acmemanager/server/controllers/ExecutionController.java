@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import static in.codebuckets.acmemanager.common.Responses.notFound;
-import static in.codebuckets.acmemanager.common.Responses.ok;
+import static in.codebuckets.acmemanager.common.json.Responses.notFound;
+import static in.codebuckets.acmemanager.common.json.Responses.ok;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
