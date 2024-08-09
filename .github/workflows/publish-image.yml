@@ -1,3 +1,4 @@
+
 name: Publish Docker Image
 
 on:
@@ -30,11 +31,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Agent
-        run: docker build -t ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} -f acme-manager-agent/Dockerfile .
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE_NAME }}:agent-${{ env.TAG }} -f acme-manager-agent/Dockerfile .
 
       - name: Tag Agent
         run: |
-          docker tag ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE_NAME }}:agent-${{ env.VERSION }}
+          docker tag ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE_NAME }}:agent-${{ env.TAG }} ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE_NAME }}:agent-${{ env.VERSION }}
 
       - name: Publish Agent
         run: |
