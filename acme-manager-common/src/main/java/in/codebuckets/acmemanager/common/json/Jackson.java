@@ -15,7 +15,7 @@
  *
  */
 
-package in.codebuckets.acmemanager.common;
+package in.codebuckets.acmemanager.common.json;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

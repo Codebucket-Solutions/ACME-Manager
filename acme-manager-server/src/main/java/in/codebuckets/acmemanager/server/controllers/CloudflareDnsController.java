@@ -17,7 +17,7 @@
 
 package in.codebuckets.acmemanager.server.controllers;
 
-import in.codebuckets.acmemanager.common.Responses;
+import in.codebuckets.acmemanager.common.json.Responses;
 import in.codebuckets.acmemanager.server.GlobalExceptionHandler;
 import in.codebuckets.acmemanager.server.dto.AddDnsRecord;
 import in.codebuckets.acmemanager.server.services.dns.CloudflareDnsService;

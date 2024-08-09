@@ -15,10 +15,11 @@
  *
  */
 
-package in.codebuckets.acmemanager.agent;
+package in.codebuckets.acmemanager.agent.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import in.codebuckets.acmemanager.agent.AbstractTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
+import static in.codebuckets.acmemanager.agent.auth.WebSecurityConfig.AUTH_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.HttpStatus.OK;
@@ -52,7 +54,7 @@ class MetadataControllerTest extends AbstractTest {
 
         ResponseEntity<String> responseEntity = webClient.get()
                 .uri("/v1/agent/metadata/")
-                .header(AuthService.AUTH_HEADER, apiKey)
+                .header(AUTH_HEADER, apiKey)
                 .accept(APPLICATION_JSON)
                 .retrieve()
                 .toEntity(String.class)
@@ -72,7 +74,7 @@ class MetadataControllerTest extends AbstractTest {
 
         Mono<ResponseEntity<String>> responseEntity = webClient.get()
                 .uri("/v1/agent/metadata/")
-                .header(AuthService.AUTH_HEADER, invalidApiKey)
+                .header(AUTH_HEADER, invalidApiKey)
                 .accept(APPLICATION_JSON)
                 .retrieve()
                 .toEntity(String.class);

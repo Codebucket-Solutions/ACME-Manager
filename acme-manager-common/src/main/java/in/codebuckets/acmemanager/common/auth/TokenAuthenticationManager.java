@@ -15,7 +15,7 @@
  *
  */
 
-package in.codebuckets.acmemanager.server.auth;
+package in.codebuckets.acmemanager.common.auth;
 
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;

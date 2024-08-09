@@ -15,21 +15,18 @@
  *
  */
 
-package in.codebuckets.acmemanager.agent;
+package in.codebuckets.acmemanager.agent.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static in.codebuckets.acmemanager.agent.AuthService.AUTH_HEADER;
-import static in.codebuckets.acmemanager.common.Responses.ok;
-import static in.codebuckets.acmemanager.common.Responses.unauthorized;
+import static in.codebuckets.acmemanager.common.json.Responses.ok;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequestMapping("/v1/agent/metadata")
@@ -39,18 +36,8 @@ public class MetadataController {
     @Value("${app.version}")
     private String version;
 
-    private final AuthService authService;
-
-    public MetadataController(AuthService authService) {
-        this.authService = authService;
-    }
-
     @GetMapping(value = "/", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getMetadata(@RequestHeader(AUTH_HEADER) String apiKey) {
-        if (!authService.authenticate(apiKey)) {
-            return unauthorized("Invalid API Key");
-        }
-
+    public ResponseEntity<String> getMetadata() {
         Map<String, Object> map = new HashMap<>();
         map.put("version", version);
         return ok(map);

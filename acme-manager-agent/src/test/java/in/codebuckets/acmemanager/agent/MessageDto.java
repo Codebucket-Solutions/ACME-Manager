@@ -17,25 +17,5 @@
 
 package in.codebuckets.acmemanager.agent;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-class AuthServiceTest {
-
-    @Autowired
-    private AuthService authService;
-
-    @Value("${app.apiKey}")
-    private String apiKey;
-
-    @Test
-    void authenticate() {
-        assertTrue(authService.authenticate(apiKey));
-    }
+public record MessageDto(String message) {
 }

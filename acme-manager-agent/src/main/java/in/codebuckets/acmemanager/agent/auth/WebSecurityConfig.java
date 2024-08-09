@@ -15,16 +15,15 @@
  *
  */
 
-package in.codebuckets.acmemanager.server.auth;
+package in.codebuckets.acmemanager.agent.auth;
 
 import in.codebuckets.acmemanager.common.auth.CustomAccessDeniedHandler;
 import in.codebuckets.acmemanager.common.auth.CustomAuthenticationEntryPoint;
 import in.codebuckets.acmemanager.common.auth.TokenAuthenticationManager;
-import in.codebuckets.acmemanager.server.jpa.Account;
-import in.codebuckets.acmemanager.server.jpa.AccountRepository;
-import in.codebuckets.acmemanager.server.services.JwtService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -35,29 +34,21 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class WebSecurityConfig {
 
-    private final JwtService jwtService;
-    private final AccountRepository accountRepository;
+    @Value("${app.apiKey}")
+    private String apiKey;
 
-    public WebSecurityConfig(JwtService jwtService, AccountRepository accountRepository) {
-        this.jwtService = jwtService;
-        this.accountRepository = accountRepository;
-    }
+    public static final String AUTH_HEADER = "X-Api-Key";
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/v1/account/**").permitAll()
-                        .pathMatchers("/v1/general/**").permitAll()
-                        .pathMatchers("/v1/agent/register").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/.well-known/acme-challenge/*").permitAll() // For ACME client to verify domain ownership
                         .pathMatchers("/**").access(new TokenAuthenticationManager())
                         .anyExchange()
                         .permitAll())
@@ -72,22 +63,12 @@ public class WebSecurityConfig {
 
                     @Override
                     public Mono<SecurityContext> load(ServerWebExchange exchange) {
-                        return Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst(AUTHORIZATION))
-                                .filter(jwtService::isJwtValid)
-                                .flatMap(token -> {
-                                    Long userId = jwtService.accountId(token);
-                                    return Mono.fromCallable(() -> accountRepository.findById(userId))
-                                            .subscribeOn(Schedulers.boundedElastic())
-                                            .flatMap(optionalAccount -> optionalAccount
-                                                    .map(account -> Mono.just(createAuthenticatedContext(account, token)))
-                                                    .orElseGet(() -> Mono.just(new SecurityContextImpl(JwtAuthentication.UNAUTHENTICATED)))
-                                            );
-                                })
-                                .switchIfEmpty(Mono.just(new SecurityContextImpl(JwtAuthentication.UNAUTHENTICATED)));
-                    }
-
-                    private static SecurityContext createAuthenticatedContext(Account account, String token) {
-                        return new SecurityContextImpl(new JwtAuthentication(account, token, true));
+                        String value = exchange.getRequest().getHeaders().getFirst(AUTH_HEADER);
+                        if (value != null && value.equals(apiKey)) {
+                            return Mono.just(new SecurityContextImpl(new TokenAuthentication(value, true)));
+                        } else {
+                            return Mono.just(new SecurityContextImpl(TokenAuthentication.UNAUTHENTICATED));
+                        }
                     }
                 })
                 .exceptionHandling(new Customizer<ServerHttpSecurity.ExceptionHandlingSpec>() {

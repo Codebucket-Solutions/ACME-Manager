@@ -19,21 +19,24 @@ package in.codebuckets.acmemanager.agent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-@SpringBootApplication(exclude = ReactiveUserDetailsServiceAutoConfiguration.class)
-public class AgentApplication {
+import static in.codebuckets.acmemanager.common.utils.StringUtil.maskString;
+
+@Component
+public class EnvironmentLogger implements ApplicationListener<ApplicationStartedEvent> {
 
     private static final Logger logger = LogManager.getLogger();
 
-    public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(AgentApplication.class, args);
+    @Override
+    public void onApplicationEvent(ApplicationStartedEvent event) {
+        Environment environment = event.getApplicationContext().getEnvironment();
 
-        if (ctx.isRunning()) {
-            logger.info("ACME Manager Agent is running");
-        }
+        logger.info("Agent Version: {}", environment.getProperty("app.version"));
+        logger.info("API Key: {}", maskString(environment.getProperty("app.apiKey")));
+        logger.info("Certificate Directory: {}", environment.getProperty("app.certificateDir"));
     }
 }
